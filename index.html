@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Flores para Ti - Con Amor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            background: radial-gradient(circle at center, #ffe6f2, #ffc9d6, #ffafc9);
+            color: #4b304b;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Estrellitas */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: twinkle 4s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.5); }
+        }
+
+        /* Emojis que caen */
+        .emoji-caer {
+            position: absolute;
+            top: -30px;
+            font-size: 25px; /* Tamaño del emoji */
+            animation: caer 10s linear infinite;
+            opacity: 0.8;
+            z-index: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes caer {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Contenedor */
+        .cards-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            flex: 1;
+            backdrop-filter: blur(5px);
+            transition: transform 0.4s, box-shadow 0.4s;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.5));
+        }
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 36px;
+            font-family: 'Dancing Script', cursive;
+            margin: 0 0 15px;
+            color: #d15181;
+            text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            margin: 12px 0 6px;
+            font-size: 22px;
+            font-family: 'Dancing Script', cursive;
+            color: #ff69b4;
+        }
+
+        p {
+            margin: 0;
+            font-size: 16px;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #5d455d;
+            line-height: 1.4;
+        }
+
+        /* Reproductor */
+        .player {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 40px;
+            padding: 10px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin: 0 auto 20px;
+            max-width: 250px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s;
+        }
+        .player.playing {
+            box-shadow: 0 0 20px #ff69b4;
+        }
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+        }
+        .controls button {
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            background: #ffc2d1;
+            color: #d15181;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .controls button:hover {
+            background: #ffb3c5;
+            transform: scale(1.1);
+        }
+        .controls .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            color: #5d455d;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+        }
+
+        .flowers img {
+            width: 200px;
+            max-width: 100%;
+            filter: drop-shadow(0 0 15px rgba(255, 105, 180, 0.5));
+            margin-bottom: 10px;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        /* Animación de latido para la primera flor */
+        .flower-heartbeat {
+            animation: heartbeat 1.5s infinite ease-in-out; /* Animación más lenta y suave */
+            transform-origin: center bottom; /* El latido parece venir de la base de la flor */
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); } /* Un latido más pronunciado */
+        }
+
+        /* Animación flotante para la segunda flor */
+        .flower-floating {
+            animation: flotar 4s infinite ease-in-out;
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="cards-container">
+        <div class="card">
+            <h1>🌸 Para Ti, mi con cariño</h1>
+            <div class="player">
+                <div class="controls">
+                    <button id="playBtn">▶</button>
+                    <div class="title">Una dulce melodía para ti 💖</div>
+                </div>
+                <audio id="audio" src="musica.mp3"></audio>
+            </div>
+            <div class="flowers">
+                <img src="flor.png" alt="Flores para ti" class="flower-heartbeat">
+            </div>
+            <h3>Con todo mi cariño</h3>
+            <p>Que tu corazón florezca con cada nuevo día.</p>
+        </div>
+        <div class="card">
+            <h1>🌻 Brillo en el Alma</h1>
+            <div class="flowers">
+                <img src="flor2.png" alt="Flor animada" class="flower-floating">
+            </div>
+            <h3>Eres mi flor más hermosa</h3>
+            <p>Tu luz ilumina mi mundo y lo hace más bonito.</p>
+        </div>
+    </div>
+    <script>
+        const audio = document.getElementById("audio");
+        const playBtn = document.getElementById("playBtn");
+        const player = document.querySelector(".player");
+
+        playBtn.addEventListener("click", () => {
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = "⏸";
+                player.classList.add("playing");
+                alert("✨ Que esta melodía llene tu corazón de paz y alegría ✨");
+            } else {
+                audio.pause();
+                playBtn.textContent = "▶";
+                player.classList.remove("playing");
+            }
+        });
+
+        // Estrellitas
+        for (let i = 0; i < 60; i++) {
+            const star = document.createElement("div");
+            star.classList.add("star");
+            star.style.top = Math.random() * 100 + "%";
+            star.style.left = Math.random() * 100 + "%";
+            star.style.animationDuration = (2 + Math.random() * 3) + "s";
+            document.body.appendChild(star);
+        }
+
+        // Emojis
+        const yellowEmojis = ["☀️", "🌼", "🌻", "🏵️"]; // Lista de emojis amarillos/florales
+
+        function crearEmoji() {
+            const emoji = document.createElement("div");
+            emoji.classList.add("emoji-caer");
+            const randomEmoji = yellowEmojis[Math.floor(Math.random() * yellowEmojis.length)];
+            emoji.textContent = randomEmoji; // Selecciona un emoji aleatorio
+            emoji.style.left = Math.random() * window.innerWidth + "px";
+            emoji.style.animationDuration = (8 + Math.random() * 6) + "s";
+            emoji.style.animationDelay = -Math.random() * 8 + "s";
+            document.body.appendChild(emoji);
+            setTimeout(() => { emoji.remove(); }, 14000);
+        }
+        setInterval(crearEmoji, 400);
+    </script>
+</body>
+</html>
